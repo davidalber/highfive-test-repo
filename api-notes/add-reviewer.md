@@ -1,4 +1,4 @@
-# Initial State
+1. Initial state.
 ```sh
 $ http https://api.github.com/repos/davidalber/highfive-test-repo/pulls/1/requested_reviewers
 HTTP/1.1 200 OK
@@ -13,7 +13,7 @@ HTTP/1.1 200 OK
 
 The PR has no assigned reviewers.
 
-# Attempting to Add a Non-Collaborator Reviewer
+2. Attempting to add a non-collaborator reviewer.
 ```
 $ http POST https://api.github.com/repos/davidalber/highfive-test-repo/pulls/1/requested_reviewers Authorization:"token OAUTH_TOKEN" reviewers:='["blah"]'
 HTTP/1.1 422 Unprocessable Entity
@@ -26,7 +26,15 @@ HTTP/1.1 422 Unprocessable Entity
 }
 ```
 
-# Attempting to Add PR Creator as Reviewer
+There's still no reviewer assigned:
+```
+{
+    "teams": [],
+    "users": []
+}
+```
+
+3. Attempting to add PR creator as reviewer.
 ```
 $ http POST https://api.github.com/repos/davidalber/highfive-test-repo/pulls/1/requested_reviewers Authorization:"token OAUTH_TOKEN" reviewers:='["davidalber"]'
 HTTP/1.1 422 Unprocessable Entity
@@ -39,7 +47,15 @@ HTTP/1.1 422 Unprocessable Entity
 }
 ```
 
-# Adding a Collaborator Reviewer
+There's still no reviewer assigned:
+```
+{
+    "teams": [],
+    "users": []
+}
+```
+
+4. Adding a collaborator reviewer.
 ```
 $ http POST https://api.github.com/repos/davidalber/highfive-test-repo/pulls/1/requested_reviewers Authorization:"token OAUTH_TOKEN" reviewers:='["TapscottLab"]'
 HTTP/1.1 201 Created
@@ -379,7 +395,35 @@ HTTP/1.1 201 Created
 }
 ```
 
-# Adding a Collaborator Reviewer a Second Time
+There's now an assigned reviewer:
+```
+{
+    "teams": [],
+    "users": [
+        {
+            "avatar_url": "https://avatars2.githubusercontent.com/u/22222483?v=4",
+            "events_url": "https://api.github.com/users/TapscottLab/events{/privacy}",
+            "followers_url": "https://api.github.com/users/TapscottLab/followers",
+            "following_url": "https://api.github.com/users/TapscottLab/following{/other_user}",
+            "gists_url": "https://api.github.com/users/TapscottLab/gists{/gist_id}",
+            "gravatar_id": "",
+            "html_url": "https://github.com/TapscottLab",
+            "id": 22222483,
+            "login": "TapscottLab",
+            "organizations_url": "https://api.github.com/users/TapscottLab/orgs",
+            "received_events_url": "https://api.github.com/users/TapscottLab/received_events",
+            "repos_url": "https://api.github.com/users/TapscottLab/repos",
+            "site_admin": false,
+            "starred_url": "https://api.github.com/users/TapscottLab/starred{/owner}{/repo}",
+            "subscriptions_url": "https://api.github.com/users/TapscottLab/subscriptions",
+            "type": "User",
+            "url": "https://api.github.com/users/TapscottLab"
+        }
+    ]
+}
+```
+
+5. Adding a collaborator reviewer a second time.
 ```
 $ http POST https://api.github.com/repos/davidalber/highfive-test-repo/pulls/1/requested_reviewers Authorization:"token OAUTH_TOKEN" reviewers:='["TapscottLab"]'
 HTTP/1.1 201 Created
@@ -387,4 +431,9 @@ HTTP/1.1 201 Created
 .
 .
 (it works as above)
+```
+
+There's still the same assigned reviewer:
+```
+(same as above)
 ```
