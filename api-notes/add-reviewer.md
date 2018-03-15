@@ -795,4 +795,7 @@ $ http POST https://api.github.com/repos/davidalber/highfive-test-repo/pulls/1/r
 ```
 
 Takeaway: setting a reviewer when reviewers already exist appends the
-new reviewer, instead of replacing the current reviewers.
+new reviewer, instead of replacing the current reviewers. To replace
+reviewers, an API request is needed to delete reviewers. See
+documentation for that request
+[here](https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request).
