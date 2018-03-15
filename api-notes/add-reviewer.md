@@ -14,12 +14,12 @@ HTTP/1.1 200 OK
 The PR has no assigned reviewers.
 
 2. Attempting to add a non-collaborator reviewer.
-```
+```sh
 $ http POST https://api.github.com/repos/davidalber/highfive-test-repo/pulls/1/requested_reviewers Authorization:"token OAUTH_TOKEN" reviewers:='["blah"]'
 HTTP/1.1 422 Unprocessable Entity
-.
-.
-.
+```
+
+```json
 {
     "documentation_url": "https://developer.github.com/v3/pulls/review_requests/#create-a-review-request",
     "message": "Reviews may only be requested from collaborators. One or more of the users or teams you specified is not a collaborator of the davidalber/highfive-test-repo repository."
@@ -27,7 +27,7 @@ HTTP/1.1 422 Unprocessable Entity
 ```
 
 There's still no reviewer assigned:
-```
+```json
 {
     "teams": [],
     "users": []
@@ -35,12 +35,11 @@ There's still no reviewer assigned:
 ```
 
 3. Attempting to add PR creator as reviewer.
-```
+```sh
 $ http POST https://api.github.com/repos/davidalber/highfive-test-repo/pulls/1/requested_reviewers Authorization:"token OAUTH_TOKEN" reviewers:='["davidalber"]'
 HTTP/1.1 422 Unprocessable Entity
-.
-.
-.
+```
+```json
 {
     "documentation_url": "https://developer.github.com/v3/pulls/review_requests/#create-a-review-request",
     "message": "Review cannot be requested from pull request author."
@@ -48,7 +47,7 @@ HTTP/1.1 422 Unprocessable Entity
 ```
 
 There's still no reviewer assigned:
-```
+```json
 {
     "teams": [],
     "users": []
@@ -56,12 +55,11 @@ There's still no reviewer assigned:
 ```
 
 4. Adding a collaborator reviewer.
-```
+```sh
 $ http POST https://api.github.com/repos/davidalber/highfive-test-repo/pulls/1/requested_reviewers Authorization:"token OAUTH_TOKEN" reviewers:='["TapscottLab"]'
-HTTP/1.1 201 Created
-.
-.
-.
+```
+
+```json
 {
    "url":"https://api.github.com/repos/davidalber/highfive-test-repo/pulls/1",
    "id":174553582,
@@ -396,7 +394,7 @@ HTTP/1.1 201 Created
 ```
 
 There's now an assigned reviewer:
-```
+```json
 {
     "teams": [],
     "users": [
@@ -424,7 +422,7 @@ There's now an assigned reviewer:
 ```
 
 5. Adding a collaborator reviewer a second time.
-```
+```sh
 $ http POST https://api.github.com/repos/davidalber/highfive-test-repo/pulls/1/requested_reviewers Authorization:"token OAUTH_TOKEN" reviewers:='["TapscottLab"]'
 HTTP/1.1 201 Created
 .
