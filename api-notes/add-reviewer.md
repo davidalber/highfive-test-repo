@@ -798,4 +798,4 @@ Takeaway: setting a reviewer when reviewers already exist appends the
 new reviewer, instead of replacing the current reviewers. To replace
 reviewers, an API request is needed to delete reviewers. See
 documentation for that request
-[here](https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request).
+[here](https://developer.github.com/v3/pulls/review_requests/#delete-a-review-request). Alternatively, the set assignees route can be used by passing an empty array
